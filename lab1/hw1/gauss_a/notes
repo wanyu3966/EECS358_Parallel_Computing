@@ -1,0 +1,18 @@
+#include <sys/time.h>
+int gettimeofday(struct timeval*tv, struct timezone *tz);
+其参数tv是保存获取时间结果的结构体，参数tz用于保存时区结果：
+struct timezone{
+int tz_minuteswest;/*格林威治时间往西方的时差*/
+int tz_dsttime;/*DST 时间的修正方式*/
+}
+timezone 参数若不使用则传入NULL即可。
+而结构体timeval的定义为：
+struct timeval{
+long int tv_sec; // 秒数
+long int tv_usec; // 微秒数
+}
+它获得的时间精确到微秒（1e-6 s)量级。在一段代码前后分别使用gettimeofday可以计算代码执行时间：
+struct timeval tv_begin, tv_end;
+gettimeofday(&tv_begin, NULL);
+foo();
+gettimeofday(&tv_end, NULL);
